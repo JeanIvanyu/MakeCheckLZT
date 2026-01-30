@@ -502,7 +502,7 @@ def handle_activation_message(
             loop,
             bot.send_message(
                 owner_id,
-                f"💸 Чек {code} активирован пользователем {username or lzt_user_id}. {format_amount(amount)}₽ успешно отправлены"
+                f" Чек {code} активирован пользователем {username or lzt_user_id}. {format_amount(amount)}₽ успешно отправлены"
             )
         )
     else:
@@ -511,7 +511,7 @@ def handle_activation_message(
             loop,
             bot.send_message(
                 owner_id,
-                f"❌ Чек {code} активирован пользователем {username or lzt_user_id}, "
+                f" Чек {code} активирован пользователем {username or lzt_user_id}, "
                 f"но перевод не прошел. Ответ API: {resp_text[:500]}"
             )
         )
@@ -540,6 +540,7 @@ def poll_forum_once(bot: Bot, owner_id: int, loop: asyncio.AbstractEventLoop) ->
                     "last_text": last_text,
                     "item": item,
                 }
+                conv_ids.append(conv_id)
             if last_text and "чек" in last_text.lower():
                 logger.info(
                     "Нашел смс, которое содержит 'чек' conv=%s text=%s",
@@ -657,7 +658,7 @@ async def inline_create_check(query: InlineQuery) -> None:
     url = f"https://lolz.live/members/{lzt_id}/write?message={encoded}"
 
     text = (
-        f"🧾 Чек на {format_amount(amount)} ₽\n"
+        f" Чек на {format_amount(amount)} ₽\n"
         "Используйте кнопку ниже, чтобы забрать его."
     )
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
